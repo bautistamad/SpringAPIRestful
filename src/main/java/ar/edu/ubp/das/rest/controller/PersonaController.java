@@ -43,7 +43,7 @@ public class PersonaController {
     }
     
     @DeleteMapping(path="/{nro_persona}")
-    public ResponseEntity<?> deletePersona(@PathVariable("nro_persona") int nroPersona) {
+    public ResponseEntity<List<PersonaData>> deletePersona(@PathVariable("nro_persona") int nroPersona) {
       return new ResponseEntity<>(repository.deletePersona(nroPersona), HttpStatus.OK);
     }
     

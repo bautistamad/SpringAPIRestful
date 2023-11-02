@@ -71,17 +71,19 @@ public class PersonaRepository {
     }
 	
 	@SuppressWarnings("unchecked")
-	public void deletePersona(int nroPersona) {
+	public List<PersonaData> deletePersona(int nroPersona) {
     	
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("nro_persona", nroPersona);
         
     	SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTpl)
     	   .withProcedureName("delete_persona")
-           .withSchemaName("dbo");
+           .withSchemaName("dbo")
+           .returningResultSet("personas", BeanPropertyRowMapper.newInstance(PersonaData.class));
        	
        	Map<String, Object> out = jdbcCall.execute(in);
-       	return ;
+       	
+       	return (List<PersonaData>)out.get("personas");
     }
 	
     @Transactional
