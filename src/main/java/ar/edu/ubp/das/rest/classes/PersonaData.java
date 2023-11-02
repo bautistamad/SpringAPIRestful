@@ -13,7 +13,6 @@ public class PersonaData {
 	private Date   fechaNacimiento;
 	private String codNacionalidad;
 	private List<Integer> equipos;
-
 	private List<Integer> actividades;
 
 

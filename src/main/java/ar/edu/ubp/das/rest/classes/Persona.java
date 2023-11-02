@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Persona {
 	
+	private int nroPersona;
 	private String nombre;
 	private String apellido;
 	private String clave;
@@ -12,6 +13,12 @@ public class Persona {
 	private Date   fechaNacimiento;
 	private String codNacionalidad;
 
+	public int getNroPersona() {
+		return nroPersona;
+	}
+	public void setNroPersona(int nroPersona) {
+		this.nroPersona = nroPersona;
+	}
 	public String getNombre() {
 		return nombre;
 	}

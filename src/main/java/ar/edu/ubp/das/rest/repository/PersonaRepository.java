@@ -70,8 +70,23 @@ public class PersonaRepository {
        	return (List<Actividad>)out.get("actividades");
     }
 	
+	@SuppressWarnings("unchecked")
+	public void deletePersona(int nroPersona) {
+    	
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("nro_persona", nroPersona);
+        
+    	SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTpl)
+    	   .withProcedureName("delete_persona")
+           .withSchemaName("dbo");
+       	
+       	Map<String, Object> out = jdbcCall.execute(in);
+       	return ;
+    }
+	
     @Transactional
     public PersonaData insPersona(PersonaData data) {
+   
         SqlParameterSource in = new MapSqlParameterSource()
            .addValue("apellido", data.getApellido())
            .addValue("nombre", data.getNombre())
@@ -89,7 +104,6 @@ public class PersonaRepository {
            .withSchemaName("dbo");
         jdbcCall.execute(in);
 
-        
         return data;
     }
 	
