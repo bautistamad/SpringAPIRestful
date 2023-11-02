@@ -24,6 +24,20 @@ public class PersonaRepository {
     @Autowired
     private JdbcTemplate jdbcTpl;
     
+    @SuppressWarnings("unchecked")
+	public List<PersonaData> getPersona(int nroPersona) {
+    	
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("nroPersona", nroPersona);
+        
+    	SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTpl)
+    	   .withProcedureName("get_persona")
+           .withSchemaName("dbo")
+       	   .returningResultSet("persona", BeanPropertyRowMapper.newInstance(PersonaData.class));
+       	
+       	Map<String, Object> out = jdbcCall.execute(in);
+       	return (List<PersonaData>)out.get("persona");
+    }
     
     @SuppressWarnings("unchecked")
 	public List<Persona> getPersonas() {

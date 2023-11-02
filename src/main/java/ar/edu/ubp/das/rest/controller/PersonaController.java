@@ -32,6 +32,11 @@ public class PersonaController {
     @Autowired
     PersonaRepository repository;
 
+    @GetMapping(path="/{nro_persona}")
+    public ResponseEntity<List<PersonaData>> getPersona( @PathVariable("nro_persona") int nroPersona ) {
+      return new ResponseEntity<>(repository.getPersona(nroPersona), HttpStatus.OK);
+    }
+    
     @GetMapping(path="/listado")
     public ResponseEntity<List<Persona>> getPersonas() {
       return new ResponseEntity<>(repository.getPersonas(), HttpStatus.OK);

@@ -317,6 +317,43 @@ begin
 end
 go
 
+/* ------------------------------------------
+   Procedimientos: get_persona
+   ------------------------------------------ */
+create or alter procedure dbo.get_persona
+(
+ @nro_persona	integer
+)
+as
+begin
+
+  declare @equipos varchar(4000);
+  declare @actividades varchar(4000);
+
+  select @equipos = STRING_AGG(CAST(nro_equipo as varchar), ',') 
+  from dbo.equipos_personas
+  where nro_persona = @nro_persona;
+
+  select @actividades = STRING_AGG(CAST(nro_actividad as varchar), ',') 
+  from dbo.actividades_personas
+  where nro_persona = @nro_persona;
+
+  select p.nro_persona,
+       p.nombre,
+       p.apellido,
+		 p.clave,
+		 p.correo,
+		 p.cod_genero,
+		 p.fecha_nacimiento,
+		 p.cod_nacionalidad,
+         @equipos as equipos,
+         @actividades as actividades
+    from dbo.personas p
+   where nro_persona = @nro_persona	
+
+end
+go
+
 -- execute dbo.get_personas
 
 /* ------------------------------------------
@@ -361,7 +398,7 @@ begin
   delete from dbo.equipos_personas where nro_persona = @nro_persona;
 
   delete from dbo.actividades_personas where nro_persona = @nro_persona;
-  
+
   delete from dbo.personas
   output 
     deleted.nombre, 
@@ -446,6 +483,8 @@ execute dbo.ins_persona
 
 
 EXEC dbo.delete_persona @nro_persona = 6
+
+EXEC dbo.get_persona @nro_persona = 11
 
 select * from personas
 
